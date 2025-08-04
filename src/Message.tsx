@@ -123,7 +123,7 @@ function InsertLink() {
         <h1 className="introduction">Welcome Back, Meiqi!</h1>
         <img
           className="background-banner"
-          src="background.avif"
+          src="me.png"
           alt="Decorative banner"
         />
         <div className="link-container top">

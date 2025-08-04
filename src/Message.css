@@ -17,7 +17,7 @@ html, body {
 .background-banner {
   display: block;
   margin: 2rem auto; /*  centers horizontally */
-  max-width: 80%;    /* or set a fixed width like 600px */
+  max-width: 10%;    /* or set a fixed width like 600px */
   height: auto;
   border-radius: 12px;
 }
