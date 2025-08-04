@@ -1,0 +1,224 @@
+/* message.css */
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+@import url('https://fonts.googleapis.com/css2?family=Ovo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Ovo&display=swap');
+.whole-container {
+  background-color: #FFEAEA;
+  min-height: 100vh; 
+  display: flex;
+  flex-direction: column;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #FFEAEA;
+}
+
+.background-banner {
+  display: block;
+  margin: 2rem auto; /*  centers horizontally */
+  max-width: 80%;    /* or set a fixed width like 600px */
+  height: auto;
+  border-radius: 12px;
+}
+.greeting {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .introduction{
+    font-family: "Dancing+Script", cursive;
+    background-color: #FFEAEA;
+    color: #748DAE;
+    padding-left: 30px;
+    padding-top: 30px;
+    font-size: 2.25rem;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+
+  }
+  .introduction::after,
+  .introduction::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #F5CBCB, #FFEAEA);
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease-out;
+  }
+  .introduction::before {
+    top: -5px;
+    transform-origin: left;
+  }
+  .introduction:hover::after,
+  .introduction:hover::before {
+    transform: scaleX(1);
+  }
+  .link-container.top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 20px;
+    padding-top: 10px;
+    /* background-color: #f9cdd5; */
+    /* font-family: "Ovo" */
+  }
+  .link-container.bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 20px;
+    padding-top: 2rem;
+    /* padding-left: 2rem; */
+
+  }
+  .link-input {
+    padding: 10px;
+    width: 700px;
+    height: 40px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #748DAE;
+    color:#748DAE;
+    padding-top: 10px;
+
+  }
+  .link-input:focus {
+    outline: none;
+    border-color: #CC8899;
+    box-shadow: 0 0 5px #e5a2b5;
+  }
+  .send-button {
+    padding: 8px 16px;
+    background-color: #CC8899;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+  }
+  .send-button:hover {
+    background-color: #CC8899;
+    transform: scale(1.15);
+  }
+
+/* Cart Button */
+
+/* whole cart-btn container */
+  .cart-btn{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+  }
+  /* inside cart-btn container */
+  .cart-btn svg {
+    transform: scaleX(-1); /* flip horizontally */
+    width: 50px;
+    height: 60px;
+    color: #748DAE;
+  }
+  
+  .cart-popup {
+    position: absolute;
+    top: 80px;
+    right: 30px;
+    background: white;
+    padding: 1rem;
+    border: 1px solid #F5CBCB;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    z-index: 2000;
+    width: 15rem;
+    max-height: 30rem;     /* set a sensible max height */
+    overflow-y: auto;      /* scroll if too many items */
+    text-align: center;
+    justify-content: center;
+
+  }
+  
+  .cart-popup ul {
+    list-style: none;
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cart-popup li {
+    display: flex;
+    flex-direction: row;        /* put items side by side */
+    align-items: center;        /* vertically center them */
+    justify-content: space-between; /* space between image and link */
+    gap: 10px;                  /* space between image and link */
+    padding: 0.5rem 0;
+    color: #748DAE;
+  }
+  .cart-popup h2{
+    color:#748DAE;
+  }
+  .cart-popup img {
+    border-radius: 20px;
+    text-align: center;
+
+  }
+  .Total-Items{
+    size:2px;
+    color: #748DAE;
+    padding-top: 2px;
+  }
+  .cart-popup a{
+    color: #CC8899;
+    text-align: center;
+    padding-right: 20px;
+
+  }
+  .cart-popup:hover a{
+    color: #748DAE;
+    text-align: center;
+    padding-right: 20px;
+
+  }
+  
+  .cart-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #CC8899;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideInFadeOut 2s ease forwards;
+    z-index: 9999;
+  }
+  
+  @keyframes slideInFadeOut {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    10% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+  
