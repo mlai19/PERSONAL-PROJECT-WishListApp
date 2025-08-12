@@ -1,13 +1,14 @@
 // .tsx means TypeScript combined with React
 // .ts is just TypeScript
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Message.css";
 import SubmissionGrid from "./SubmissionGrid";
 
 type WishlistItem = {
   url: string;
   image: string;
+  price?: string | null;
 };
 
 function InsertLink() {
@@ -30,6 +31,41 @@ function InsertLink() {
         "https://m.media-amazon.com/images/I/41WBS5+tk0L.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_PIRIOFOURANDHALF-medium,BottomLeft,30,-20_ZA345,500,900,420,420,AmazonEmber,50,4,0,0_QL100_.jpg",
     },
   ]);
+  useEffect(() => {
+    let cancelled = false;
+
+    async function hydratePrices() {
+      const updates = await Promise.all(
+        submissions.map(async (item) => {
+          if (item.price != null) return item; // already has a price
+          try {
+            const resp = await fetch("http://localhost:5001/preview", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ url: encodeURI(item.url) }),
+            });
+            const data = await resp.json();
+            // console.log("Fetched HTML for:", URL);
+            // console.log("Price:", data?.price);
+
+            return { ...item, price: data?.price ?? null };
+          } catch {
+            return { ...item, price: null };
+          }
+        })
+      );
+
+      if (!cancelled) setSubmissions(updates);
+    }
+
+    // only run if at least one item is missing a price
+    if (submissions.some((s) => s.price == null)) {
+      hydratePrices();
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const [showCart, setShowCart] = useState(false);
   const [isCartHovered, setIsCartHovered] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -55,9 +91,13 @@ function InsertLink() {
       });
 
       const data = await response.json();
+      console.log("preview response:", data);
 
       if (data.image) {
-        setSubmissions((prev) => [...prev, { url, image: data.image }]);
+        setSubmissions((prev) => [
+          ...prev,
+          { url, image: data.image, price: data.price },
+        ]);
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
       } else {

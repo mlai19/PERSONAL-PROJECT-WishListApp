@@ -1,8 +1,21 @@
 import "./SubmissionGrid.css";
 
+type Submission = { url: string; image: string; price?: string | null };
+
 type SubmissionGridProps = {
-  submissions: { url: string; image: string }[];
+  submissions: Submission[];
   handleDelete: (index: number) => void;
+};
+
+const fmtPrice = (p?: string | null) => {
+  if (!p) return "—";
+  // remove commas, keep digits/dots
+  const num = Number(String(p).replace(/[^\d.]/g, ""));
+  if (Number.isNaN(num)) return "—";
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(num);
 };
 
 function SubmissionGrid({ submissions, handleDelete }: SubmissionGridProps) {
@@ -21,14 +34,18 @@ function SubmissionGrid({ submissions, handleDelete }: SubmissionGridProps) {
             onClick={(e) => e.stopPropagation()} // prevent bubbling from inside
           >
             <img src={item.image} alt={`Preview for ${item.url}`} />
-            <span>View</span>
+            <p className="price">Price: {item.price ? `$${item.price}` : "—"}</p>
+
             <div
               className="delete-btn"
               onClick={(e) => {
-                e.preventDefault();     // stop the link from opening
-                e.stopPropagation();    // stop click from reaching parent <a>
+                e.preventDefault(); // stop the link from opening
+                e.stopPropagation(); // stop click from reaching parent <a>
                 handleDelete(index);
               }}
+              aria-label="Delete item"
+              role="button"
+              tabIndex={0}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

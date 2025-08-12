@@ -37,6 +37,7 @@ html, body {
     font-weight: 600;
     position: relative;
     display: inline-block;
+    font-size: 7vw;
 
   }
   .introduction::after,
