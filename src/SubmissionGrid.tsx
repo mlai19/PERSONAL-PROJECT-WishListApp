@@ -1,10 +1,16 @@
 import "./SubmissionGrid.css";
 
-type Submission = { url: string; image: string; price?: string | null };
+type Submission = {
+  url: string;
+  image: string;
+  price?: string | null;
+  favorite?: boolean;
+};
 
 type SubmissionGridProps = {
   submissions: Submission[];
   handleDelete: (index: number) => void;
+  toggleFavorite: (index: number) => void;
 };
 
 const fmtPrice = (p?: string | null) => {
@@ -18,7 +24,11 @@ const fmtPrice = (p?: string | null) => {
   }).format(num);
 };
 
-function SubmissionGrid({ submissions, handleDelete }: SubmissionGridProps) {
+function SubmissionGrid({
+  submissions,
+  handleDelete,
+  toggleFavorite,
+}: SubmissionGridProps) {
   return (
     <div className="submission-grid">
       {submissions.map((item, index) => (
@@ -33,8 +43,34 @@ function SubmissionGrid({ submissions, handleDelete }: SubmissionGridProps) {
             className="grid-card"
             onClick={(e) => e.stopPropagation()} // prevent bubbling from inside
           >
+            <button
+              className={`favorite-btn ${item.favorite ? "is-favorited" : ""}`}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFavorite(index);
+              }}
+              aria-label={item.favorite ? "Unfavorite" : "Favorite"}
+              title={item.favorite ? "Unfavorite" : "Favorite"}
+            >
+              {/* Heart icon (filled via CSS when favorited) */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="22"
+                height="22"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.59 3.81 15.26 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
             <img src={item.image} alt={`Preview for ${item.url}`} />
-            <p className="price">Price: {item.price ? `$${item.price}` : "—"}</p>
+            <p className="price">
+              Price: {item.price ? `$${item.price}` : "—"}
+            </p>
 
             <div
               className="delete-btn"

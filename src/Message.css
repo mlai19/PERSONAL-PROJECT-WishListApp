@@ -8,6 +8,11 @@
   display: flex;
   flex-direction: column;
 }
+.page {
+  max-width: 1200px;      /* center content on wide screens */
+  margin: 0 auto;
+  padding: 16px clamp(12px, 3vw, 32px);
+}
 html, body {
   height: 100%;
   margin: 0;
@@ -33,11 +38,12 @@ html, body {
     color: #748DAE;
     padding-left: 30px;
     padding-top: 30px;
-    font-size: 2.25rem;
+
     font-weight: 600;
     position: relative;
     display: inline-block;
     font-size: 7vw;
+    font-size: clamp(28px, 6vw, 64px);
 
   }
   .introduction::after,
@@ -68,22 +74,20 @@ html, body {
     gap: 0.5rem;
     margin-top: 20px;
     padding-top: 10px;
-    /* background-color: #f9cdd5; */
-    /* font-family: "Ovo" */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: 1fr auto;
   }
   .link-container.bottom {
-    display: flex;
+    display: grid;
     justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 20px;
-    padding-top: 2rem;
-    /* padding-left: 2rem; */
+    width:100%
 
   }
   .link-input {
     padding: 10px;
-    width: 700px;
+    width: 100%;
     height: 40px;
     font-size: 1rem;
     border-radius: 8px;
@@ -112,6 +116,28 @@ html, body {
     background-color: #CC8899;
     transform: scale(1.15);
   }
+  .grid-wrap {
+    display: inline-block;
+  }
+  .controls-row {
+    display: flex;
+    align-items: center;
+    gap: 16px 24px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .Total-Cost{
+    justify-self: start;       /* align to the left edge of the centered section */
+    padding-left: 1.5rem;      /* matches .submission-grid padding-left */
+    margin: 0 0 .5rem 0;
+    color: #748DAE;
+    font-weight: 600;
+    padding-top: 1rem;
+  }
+  .link-container.bottom .submission-grid {
+    padding-top: 0 !important; /* overrides the 1.5rem top padding in SubmissionGrid.css */
+    margin-top: 0.25rem;       /* small gap under the label */
+  }
 
 /* Cart Button */
 
@@ -122,6 +148,7 @@ html, body {
     right: 20px;
     z-index: 1000;
     cursor: pointer;
+    inset: 16px 16px auto auto;
   }
   /* inside cart-btn container */
   .cart-btn svg {
@@ -148,14 +175,12 @@ html, body {
     justify-content: center;
 
   }
-  
   .cart-popup ul {
     list-style: none;
     position: relative;
     padding: 0;
     margin: 0;
   }
-  
   .cart-popup li {
     display: flex;
     flex-direction: row;        /* put items side by side */
@@ -176,7 +201,8 @@ html, body {
   .Total-Items{
     size:2px;
     color: #748DAE;
-    padding-top: 2px;
+    /* padding-top: 2px; */
+    padding: 0;
   }
   .cart-popup a{
     color: #CC8899;
@@ -188,9 +214,10 @@ html, body {
     color: #748DAE;
     text-align: center;
     padding-right: 20px;
-
   }
-  
+  .cart-price{
+    color: #748DAE;
+  }
   .cart-toast {
     position: fixed;
     top: 20px;
@@ -204,7 +231,11 @@ html, body {
     animation: slideInFadeOut 2s ease forwards;
     z-index: 9999;
   }
-  
+  .Cart-Total-Cost{
+    size:2px;
+    color: #748DAE;
+    padding-top: 1px;
+  }
   @keyframes slideInFadeOut {
     0% {
       opacity: 0;
@@ -222,4 +253,48 @@ html, body {
       transform: translateY(-10px);
     }
   }
+  
+  /* Filter Bar */
+
+  .filter-bar {
+    display: flex;
+    gap: 0.75rem;
+    margin: 0.15 0;
+    justify-content: flex-start; /* push buttons to the left */
+    padding-left: 1.5rem;         /* match the Total Cost padding */
+    padding-bottom: .4rem;
+  }
+  
+  .filter-bar button {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid #748DAE;
+    border-radius: 6px;
+    background: transparent;
+    color: #748DAE;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+  }
+  
+  .filter-bar button:hover {
+    background: #f4f4f4;
+  }
+  
+  .filter-bar button.active {
+    background: #748DAE;
+    color: white;
+    border-color: #748DAE;
+  }
+
+  .background-banner {
+    display: block;
+    margin: 12px auto 0;
+    max-width: min(160px, 30vw);
+    height: auto;
+    border-radius: 12px;
+  }
+  
+  /* Toast stays responsive */
+  .cart-toast { right: 16px; top: 16px; }
   

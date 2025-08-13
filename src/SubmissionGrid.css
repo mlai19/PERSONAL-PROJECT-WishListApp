@@ -48,6 +48,7 @@
 
 .grid-card img {
   width: 100%;
+  aspect-ratio: 4 / 3;
   height: 135px;
   object-fit: cover;
 }
@@ -58,8 +59,12 @@
   color: #748DAE;
   text-decoration: none;
 }
-
-
+.price {
+  margin: 10px 4px 4px;
+  color: #748DAE;
+  font-weight: 600;
+  text-align: center;
+}
 
 .grid-card a {
   display: block;
@@ -117,4 +122,40 @@
 }
 .delete-btn:hover {
   background-color: #850321;
+}
+
+/* Favorite Button */
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #ffffffcc;
+  border: none;
+  border-radius: 9999px;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 0 6px rgba(0,0,0,0.08);
+  transition: transform .15s ease, background-color .15s ease;
+}
+
+.favorite-btn { left: 10px; }
+.delete-btn  { right: 10px; }
+
+.favorite-btn { color: #748DAE; }
+.favorite-btn.is-favorited { color: #CC8899; }
+.favorite-btn svg { display: block; }
+
+.favorite-btn svg path {
+  fill: #748DAE;         /* outline color by default */
+}
+
+.favorite-btn:hover {
+  transform: scale(1.08);
+  background: #fff;
+}
+
+/* filled state when favorited */
+.favorite-btn.is-favorited svg path {
+  fill: #CC8899;         /* your pink brand tone when ON */
 }
