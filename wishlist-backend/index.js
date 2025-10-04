@@ -1,94 +1,3 @@
-// const express = require("express");
-// const cors = require("cors");
-// const axios = require("axios");
-// const cheerio = require("cheerio");
-
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-
-// const apiKey = "59914157de9245cf95b6fb66e610c51e";
-
-// function extractPriceFromHtml(html) {
-//   const $ = cheerio.load(html);
-
-//   // JSON-LD Product schema
-//   try {
-//     $('script[type="application/ld+json"]').each((_, el) => {
-//       const raw = $(el).contents().text();
-//       const parsed = JSON.parse(raw);
-//       const arr = Array.isArray(parsed) ? parsed : [parsed];
-//       for (const x of arr) {
-//         if (x["@type"] === "Product") {
-//           const offer = Array.isArray(x.offers) ? x.offers[0] : x.offers;
-//           const p = offer?.price || offer?.priceSpecification?.price;
-//           if (p) throw p; // quick escape with value
-//         }
-//       }
-//     });
-//   } catch (p) {
-//     if (typeof p === "string" || typeof p === "number") return String(p);
-//   }
-
-//   // Common meta tags
-//   const meta =
-//     $('meta[property="product:price:amount"]').attr("content") ||
-//     $('meta[property="og:price:amount"]').attr("content") ||
-//     $('meta[name="twitter:data1"]').attr("content");
-//   if (meta) return meta.replace(/[^\d.,]/g, "");
-
-//   // Common selectors
-//   const guesses = [
-//     ".a-price .a-offscreen",
-//     "#priceblock_ourprice",
-//     "#priceblock_dealprice",
-//     ".product-price",
-//     ".price--main",
-//     ".current-price",
-//     ".sale-price",
-//     '[itemprop="price"]',
-//     'meta[itemprop="price"]',
-//   ];
-//   for (const sel of guesses) {
-//     const el = $(sel).first();
-//     const v = (el.attr("content") || el.text() || "").trim();
-//     if (v) return v.replace(/[^\d.,]/g, "");
-//   }
-
-//   // Fallback
-//   const m = html.match(/[$€£]\s?\d{1,3}(?:[.,\s]\d{3})*(?:[.,]\d{2})?/);
-//   return m ? m[0].replace(/[^\d.,]/g, "") : null;
-// }
-
-// app.post("/preview", async (req, res) => {
-//   const { url } = req.body;
-//   try {
-//     const lp = await axios.get(
-//       `https://api.linkpreview.net/?key=${apiKey}&q=${url}`,
-//       { timeout: 8000 }
-//     );
-//     const image = lp.data?.image || null;
-
-//     const page = await axios.get(url, {
-//       timeout: 8000,
-//       headers: {
-//         "User-Agent":
-//           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36",
-//         "Accept-Language": "en-US,en;q=0.9",
-//       },
-//     });
-
-//     const price = extractPriceFromHtml(page.data);
-//     res.json({ image, price });
-//   } catch (e) {
-//     console.error("Preview/price failed:", e?.response?.status || e.message);
-//     res.status(200).json({ image: null, price: null }); // fail soft
-//   }
-// });
-
-// app.listen(5001, () => console.log("Server running on 5001"));
-
-
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
@@ -98,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const apiKey = "59914157de9245cf95b6fb66e610c51e"; // consider moving to process.env
+const apiKey = ""; // consider moving to process.env
 
 // ---------- helpers ----------
 const cache = new Map(); // url -> { image, price, ts }
